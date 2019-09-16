@@ -62,6 +62,7 @@ package-lock.json
 /ReactAndroid/src/androidTest/assets/AndroidTestBundle.js
 *.js.meta
 
+/.idea
 /coverage
 /third-party
 
