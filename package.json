@@ -1,6 +1,6 @@
 {
-  "name": "react-native-min-calendar",
-  "version": "1.0.0",
+  "name": "rn-lightweight-date-picker",
+  "version": "0.1.4",
   "description": "",
   "author": "",
   "license": "ISC",
@@ -11,7 +11,10 @@
   "scripts": {
     "test": "NODE_ICU_DATA=node_modules/full-icu jest"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": "^16.9.0",
+    "react-native": "^0.60.0"
+  },
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.4.5",
@@ -26,8 +29,6 @@
     "full-icu": "^1.3.0",
     "jest": "^24.9.0",
     "mockdate": "^2.0.5",
-    "react": "^16.9.0",
-    "react-native": "0.60.0",
     "react-native-testing-library": "^1.11.1",
     "react-test-renderer": "^16.9.0"
   },
@@ -36,10 +37,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/roman-sereda/react-native-min-range-calendar.git"
+    "url": "git+https://github.com/roman-sereda/rn-lightweight-date-picker.git"
   },
   "bugs": {
-    "url": "https://github.com/roman-sereda/react-native-min-range-calendar/issues"
+    "url": "https://github.com/roman-sereda/rn-lightweight-date-picker/issues"
   },
-  "homepage": "https://github.com/roman-sereda/react-native-min-range-calendar#readme"
+  "homepage": "https://github.com/roman-sereda/rn-lightweight-date-picker#readme"
 }

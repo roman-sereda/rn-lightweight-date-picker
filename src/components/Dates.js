@@ -55,7 +55,7 @@ export default class {
   }
 
   regularDay(props){
-    let day = this.getText(props.date.day, props.isWeekend ? this.styles.mainText : {});
+    let day = this.getText(props.date.day, props.isWeekend ? this.styles.weekend : {});
     let params = { date: props.date, key: props.key, testID: props.isWeekend ? "weekend" : "regular", style: {} };
     return this.getWrapper(day, params);
   }
@@ -140,11 +140,6 @@ const getStyles = (colors, sizes) => ({
   selected: {
     backgroundColor: colors.selectedDay,
   },
-  initial: {
-    borderWidth: 0.5,
-    backgroundColor: 'none',
-    borderColor: colors.selectedDay,
-  },
   ranged: {
     backgroundColor: colors.range,
   },
@@ -154,7 +149,7 @@ const getStyles = (colors, sizes) => ({
   selectedText: {
     color: colors.selectedDayText,
   },
-  mainText: {
+  weekend: {
     color: colors.weekend,
   },
   rangedText: {
@@ -164,7 +159,7 @@ const getStyles = (colors, sizes) => ({
     color: colors.unavailable,
   },
   initialDay: {
-    borderBottomColor: colors.initialText,
+    borderBottomColor: colors.initialDay,
     borderBottomWidth: 3,
   },
   initialDayText: {

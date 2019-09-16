@@ -52,10 +52,10 @@ class Calendar extends PureComponent{
     const { dayNames, styles } = this.state;
 
     return(
-      <View style = {styles.weekDays}>
+      <View style = {styles.daysOfTheWeek}>
         { dayNames.map(day => {
-          return <View style = {styles.day} key = {"name" + day}>
-            <Text style = {styles.dayNames}>
+          return <View style = {styles.dayOfTheWeekWrapper} key = {"name" + day}>
+            <Text style = {styles.dayOfTheWeek}>
              { day }
             </Text>
           </View>
@@ -125,7 +125,7 @@ class Calendar extends PureComponent{
     const { month, year, colors } = this.state;
     const {
       userStyles, minDate, maxDate, maxRange, minRange, mode, onDateChange, format, initialDate, rowPadding, rowHeight,
-    } = this.props;
+      highlightToday } = this.props;
 
     let pickerMode = ['single', 'range', 'both'].indexOf(mode) + 1;
     if(pickerMode === -1) pickerMode = 2;
@@ -143,6 +143,7 @@ class Calendar extends PureComponent{
         minDate = {minDate} maxDate = {maxDate}
         minRange = {minRange} maxRange = {maxRange}
         rowHeight = {rowHeight} rowPadding = {rowPadding}
+        highlightToday = {highlightToday}
       />
     )
   }
@@ -170,7 +171,7 @@ Calendar.defaultProps = {
   userColors: {},
   userStyles: {},
   fadeDuration: 300,
-  mode: 'both',
+  mode: 'range',
   onDateChange: () => {},
   maxRange: false,
   minRange: false,
@@ -181,6 +182,7 @@ Calendar.defaultProps = {
   rightControl: <Text>{ ">" }</Text>,
   rowHeight: 30,
   rowPadding: 7,
+  highlightToday: true,
 };
 
 Calendar.propTypes = {
@@ -200,16 +202,19 @@ Calendar.propTypes = {
   rightControl: PropTypes.node,
   rowHeight: PropTypes.number,
   rowPadding: PropTypes.number,
+  highlightToday: PropTypes.bool,
 };
 
 const getStyles = (colors, sizes) => ({
   wrapper: {
+    backgroundColor: colors.wrapper,
     paddingBottom: 10,
     paddingTop: 5,
     paddingLeft: 10,
     paddingRight: 10,
   },
   topBar: {
+    backgroundColor: colors.topBar,
     marginLeft: 10,
     marginRight: 10,
     flexDirection: 'row',
@@ -229,21 +234,22 @@ const getStyles = (colors, sizes) => ({
     alignItems: 'center',
     flexDirection: 'column',
   },
-  day: {
+  dayOfTheWeekWrapper: {
     width: "14.2857142857%",
     alignItems: 'center',
     justifyContent: 'center',
   },
   calendar: {
+    backgroundColor: colors.calendar,
     height: 6 * sizes.rowHeight + sizes.rowPadding * 5,
   },
-  weekDays: {
+  daysOfTheWeek: {
     flexDirection: 'row',
     height: 30,
     marginBottom: 7,
   },
-  dayNames: {
-    color: colors.dayNames
+  dayOfTheWeek: {
+    color: colors.dayOfTheWeek
   },
   controls: {
     flex: 1,

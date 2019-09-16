@@ -7,7 +7,7 @@ const MODE = {
 const colors = {
     range: '#edf4ff',
     rangeText: '#53628c',
-    dayNames: '#b5b7b9',
+    dayOfTheWeek: '#b5b7b9',
     title: '#10245c',
     subtitle: '#b5b7b9',
     dayText: '#53628c',
@@ -15,8 +15,11 @@ const colors = {
     selectedDayText: 'white',
     weekend: '#df6565',
     unavailable: '#c6c7c8',
-    initialText: '#488eff',
-}
+    initialDay: '#488eff',
+    calendar: 'transparent',
+    wrapper: 'transparent',
+    topBar: 'transparent'
+};
 
 exports.colors = colors;
 exports.MODE = MODE;

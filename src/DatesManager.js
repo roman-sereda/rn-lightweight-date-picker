@@ -3,7 +3,7 @@ import {MODE} from "./constants";
 import helper from './helper';
 
 const DatesManager = function(props){
-    const { month, year, initialDate, start, end, maxDate, minDate, minRange, maxRange, mode } = props;
+    const { month, year, initialDate, start, end, maxDate, minDate, minRange, maxRange, mode, highlightToday } = props;
 
     /* calendar has limits, if date is before minLimit or after maxLimit - it will become unavailable to select
      limits calculates from minDate / maxDate or minRange / maxRange (false values == no limits)
@@ -43,7 +43,7 @@ const DatesManager = function(props){
         if(this.isBeforeMinLimit(date) || this.isAfterMaxLimit(date)){
             return { isUnavailable: true };
         }
-        if(initialDay.isEqualTo(date)) return { date, isInitial: true };
+        if(initialDay.isEqualTo(date) && highlightToday) return { date, isInitial: true };
 
         return { isWeekend: dayIndex === 0 };
     };
