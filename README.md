@@ -4,6 +4,10 @@
 <img src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" data-canonical-src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" width="366.3" height="300" />
 
 Lightweight date range picker with not dependencies for React Native.
+## Install
+```sh
+$ npm i rn-lightweight-date-picker --save
+```
 ## Example
 ```javascript
 
