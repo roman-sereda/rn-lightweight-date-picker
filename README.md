@@ -3,7 +3,7 @@
 
 <img src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" data-canonical-src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" width="366.3" height="300" />
 
-Lightweight range calendar date picker with no dependencies for react-native
+Lightweight date range picker with not dependencies for React Native.
 ## Example
 ```javascript
 
