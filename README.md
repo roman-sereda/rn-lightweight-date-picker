@@ -3,26 +3,38 @@
 
 <img src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" data-canonical-src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" width="366.3" height="300" />
 
-30 kb range date picker with no dependencies for react-native
+30 kb range calendar date picker with no dependencies for react-native
 ## Example
 ```javascript
+
+  state = {
+    minDate: new Date(2018, 12, 31)
+  }
+
+  onChange(data){
+    const { start, end } = data;
+    if(start && data) api.fetchSchedule(start, end);
+  }
   
   render(){
-    let currentDate = new Date();
-    
     return(
       <Calendar
         locale = "ru"
+        userStyles = {{ topBar: { controls: 'flex-start' }}}
         userColors = {{ title: 'blue' }}
         minDate = {currentDate}
         maxRange = {10}
-        onDataChange={this.onChange}
+        minDate = {this.state.minDate}
+        onDateChange={this.onChange}
         format="dd.mm.yyyy"
-      />)
+      />
+    )
   }
 ```
 
 ## Properties
+All properties are optional
+
 | Prop | Type | Default | Desc |
 :------------ |:---------------| :-----| :-----|
 | **`locale`** | `String` | Device language | Calendar localization. |
@@ -40,12 +52,16 @@
 | **`leftControl`** | `Component` | `<Text>{ "<" }</Text>` | Specified left control. |
 | **`RightControl`** | `Component` | `<Text>{ ">" }</Text>` | Specified right control. |
 | **`highlightToday`**| `Bool` | true | Specified if current date should be highlighted. |
+| **`rowheight`**| `Number` | 30 | Week height in calendar. |
+| **`rowPadding`**| `Number` | 7 | Week padding in calendar. |
 
 ## Styles
 All styles could be overwritten.  if you want you can also easily change colors.
 <img src="https://i.imgur.com/Ny7RfCF.png" />
 
 ## Date format
+Example `dd dddd mmmm : yyyy` will become `01 Sunday September : 2019`.
+
 | Prop | Type | Default | Desc | Default | Desc |
 :------------ |:---------------| :-----| :-----|:-----| :-----|
 | `dn` | T | `mn` | S | `yy` | 19 |
