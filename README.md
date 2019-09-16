@@ -52,9 +52,16 @@
 | dddd | Thursday| mmmm | September |||
 
 
-
-
 ## Styles
-If you want to change only colors of datepicker, you can use userColors property
+All styles could be overwritten.  if you want you can also easily change colors.
+<img src="https://i.imgur.com/Ny7RfCF.png" />
 
-If you need  to customize styles, you can use userStyles property. UserStyles has higher priority than userColors. 
+## Date format
+| Prop | Type | Default | Desc | Default | Desc |
+:------------ |:---------------| :-----| :-----|:-----| :-----|
+| `dn` | T | `mn` | S | `yy` | 19 |
+| `d` | 1-31| `m` | 1-12 | `yyyy` | 2019 |
+| `dd` | 01-31| `mm` | 01-12 |||
+| `ddd` | Thu | `mmm` | Sep |||
+| `dddd` | Thursday| `mmmm` | September |||
+
