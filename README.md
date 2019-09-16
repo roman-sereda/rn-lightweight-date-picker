@@ -30,6 +30,8 @@ Lightweight date range picker with not dependencies for React Native.
     )
   }
 ```
+## Contributing
+Feel free to open new issues if you have any problems or suggestions.
 
 ## Properties
 All properties are optional
