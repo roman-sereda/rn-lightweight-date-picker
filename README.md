@@ -22,7 +22,6 @@ Lightweight range calendar date picker with no dependencies for react-native
         locale = "ru"
         userStyles = {{ topBar: { controls: 'flex-start' }}}
         userColors = {{ title: 'blue' }}
-        minDate = {currentDate}
         maxRange = {10}
         minDate = {this.state.minDate}
         onDateChange={this.onChange}
