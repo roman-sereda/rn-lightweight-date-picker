@@ -1,5 +1,5 @@
-# react-native-min-range-calendar
-
+# React Native Light DatePicker
+<a href="https://codeclimate.com/github/roman-sereda/react-native-light-datepicker/test_coverage"><img src="https://api.codeclimate.com/v1/badges/7c85ed35de65972f2131/test_coverage" /></a> <a href="https://codeclimate.com/github/roman-sereda/react-native-light-datepicker/maintainability"><img src="https://api.codeclimate.com/v1/badges/7c85ed35de65972f2131/maintainability" /></a> [![Build Status](https://travis-ci.org/roman-sereda/react-native-light-datepicker.svg?branch=develop)](https://travis-ci.org/roman-sereda/react-native-light-datepicker)
 ## Example
 ```javascript
   render(){
@@ -38,6 +38,18 @@
 | **`leftControl`** | `Component` | `<Text>{ "<" }</Text>` | Specified left control. |
 | **`RightControl`** | `Component` | `<Text>{ ">" }</Text>` | Specified right control. |
 | **`highlightToday`**| `Bool` | true | Specified if current date should be highlighted. |
+
+## Date Format
+| Prop | Type | Default | Desc | Default | Desc |
+:------------ |:---------------| :-----| :-----|:-----| :-----|
+| dn | T | mn | S | yy | 19 |
+| d | 1-31| m | 1-12 | yyyy | 2019 |
+| dd | 01-31| mm | 01-12 |||
+| ddd | Thu | mmm | Sep |||
+| dddd | Thursday| mmmm | September |||
+
+
+
 
 ## Styles
 If you want to change only colors of datepicker, you can use userColors property
