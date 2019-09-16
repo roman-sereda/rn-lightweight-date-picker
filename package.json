@@ -1,0 +1,45 @@
+{
+  "name": "react-native-min-calendar",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "main": "index.js",
+  "files": [
+    "/src"
+  ],
+  "scripts": {
+    "test": "NODE_ICU_DATA=node_modules/full-icu jest"
+  },
+  "peerDependencies": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "7.4.5",
+    "@size-limit/preset-app": "^2.1.4",
+    "babel-jest": "24.8.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react-native": "^4.0.1",
+    "full-icu": "^1.3.0",
+    "jest": "^24.9.0",
+    "mockdate": "^2.0.5",
+    "react": "^16.9.0",
+    "react-native": "0.60.0",
+    "react-native-testing-library": "^1.11.1",
+    "react-test-renderer": "^16.9.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roman-sereda/react-native-min-range-calendar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/roman-sereda/react-native-min-range-calendar/issues"
+  },
+  "homepage": "https://github.com/roman-sereda/react-native-min-range-calendar#readme"
+}
