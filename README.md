@@ -22,35 +22,24 @@
   }
 ```
 
-
 ## Properties
 | Prop | Type | Default | Desc |
 :------------ |:---------------| :-----| :-----|
-| **`locale`** | `String` | Device language | Calendar localization. If not set the device language will be used. |
-| **`onDateChange`** | `Function` | (date) => {} | Will be called every time user select or unselect date. Format: { start: `date object`, `string` or `false`, end: `date object`, `string` or `false` }. If the `format` is specified, it will return date string in this format, if not - `date object`. If date not selected will return `false`. |
-| **`format`** | `String` or `false` | false | Example: `"dddd, mmmm dS, yyyy, h:MM:ss TT"` |
+| **`locale`** | `String` | Device language | Calendar localization. |
+| **`onDateChange`** | `Function` | (date) => {} | Returns chosen date. Range mode: `{start: value, end: value}`, single: `value`. `value`: if date selected - `Date object`, if selected and format specified - `String`, if not selected - `false`.|
+| **`format`** | `String` or `false` | false | Example: `"dddd. mmmm - yyyy"`. See below for details. |
 | **`userColors`** | `Object`| {} | Override colors. See below for details. |
 | **`userStyles`** | `Object`| {} | Override styles. See below for details. |
-| **`minRange`** | `Number` or `false` | false | Minimal avaliable size of selected range. |
-| **`maxRange`** | `Number` or `false` | false |  Maximal avaliable size of selected range. |
-| **`minDate`** | `Date` or `false` | false | Minimal avaliable date to be selected. . |
-| **`maxDate`** | `Date` or `false` | false | Maximal avaliable date to be selected. |
-| **`mode`** | `String` | `both` | `single`, `range` or `both`. Give opportunity to select only one date, range, or both. |
+| **`minRange`** | `Number` or `false` | false | Minimum avaliable size of selected range. |
+| **`maxRange`** | `Number` or `false` | false |  Maximum avaliable size of selected range. |
+| **`minDate`** | `Date` or `false` | false | Minimum avaliable date to be selected. . |
+| **`maxDate`** | `Date` or `false` | false | Maximum avaliable date to be selected. |
+| **`mode`** | `String` | `range` | `single` or `range`. Give opportunity to select only one date or range(In range you can select one date too). |
 | **`fadeDuration`** | `Number` | 300 | Month switching duration in ms. |
 | **`initialDate`** | `Date` | new Date() | This date will be shown in calendar on load. Default is Current Time. |
 | **`leftControl`** | `Component` | `<Text>{ "<" }</Text>` | Specified left control. |
 | **`RightControl`** | `Component` | `<Text>{ ">" }</Text>` | Specified right control. |
 | **`highlightToday`**| `Bool` | true | Specified if current date should be highlighted. |
-
-## Date Format
-| Prop | Type | Default | Desc | Default | Desc |
-:------------ |:---------------| :-----| :-----|:-----| :-----|
-| dn | T | mn | S | yy | 19 |
-| d | 1-31| m | 1-12 | yyyy | 2019 |
-| dd | 01-31| mm | 01-12 |||
-| ddd | Thu | mmm | Sep |||
-| dddd | Thursday| mmmm | September |||
-
 
 ## Styles
 All styles could be overwritten.  if you want you can also easily change colors.
