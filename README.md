@@ -56,7 +56,7 @@ All properties are optional
 | **`rowPadding`**| `Number` | 7 | Week padding in calendar. |
 
 ## Styles
-All styles could be overwritten.  if you want you can also easily change colors.
+All styles could be overwritten. If you want you can also easily change colors. Below you can see what values are responsible for styles or colors, you can override them in `userStyles` or `userColors`.
 <img src="https://i.imgur.com/Ny7RfCF.png" />
 
 ## Date format
