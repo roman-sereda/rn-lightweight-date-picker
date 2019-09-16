@@ -1,20 +1,23 @@
 # React Native Light DatePicker
-<a href="https://codeclimate.com/github/roman-sereda/react-native-light-datepicker/test_coverage"><img src="https://api.codeclimate.com/v1/badges/7c85ed35de65972f2131/test_coverage" /></a> <a href="https://codeclimate.com/github/roman-sereda/react-native-light-datepicker/maintainability"><img src="https://api.codeclimate.com/v1/badges/7c85ed35de65972f2131/maintainability" /></a> [![Build Status](https://travis-ci.org/roman-sereda/react-native-light-datepicker.svg?branch=develop)](https://travis-ci.org/roman-sereda/react-native-light-datepicker)
+[![install size](https://packagephobia.now.sh/badge?p=rn-lightweight-date-picker)](https://packagephobia.now.sh/result?p=rn-lightweight-date-picker) <a href="https://codeclimate.com/github/roman-sereda/react-native-light-datepicker/test_coverage"><img src="https://api.codeclimate.com/v1/badges/7c85ed35de65972f2131/test_coverage" /></a> <a href="https://codeclimate.com/github/roman-sereda/react-native-light-datepicker/maintainability"><img src="https://api.codeclimate.com/v1/badges/7c85ed35de65972f2131/maintainability" /></a> [![Build Status](https://travis-ci.org/roman-sereda/react-native-light-datepicker.svg?branch=develop)](https://travis-ci.org/roman-sereda/react-native-light-datepicker)
+
+![2014-10-22 11_35_09](https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif)
+
+30 kb range date picker with no dependencies for react-native
 ## Example
 ```javascript
+  
   render(){
     let currentDate = new Date();
     
     return(
       <Calendar
-        locale = {"ru"}
-        mode = {"range"}
-        userColors = {{
-          
-        }}
+        locale = "ru"
+        userColors = {{ title: 'blue' }}
         minDate = {currentDate}
         maxRange = {10}
-        fadeDuration = {500}
+        onDataChange={this.onChange}
+        format="dd.mm.yyyy"
       />)
   }
 ```
