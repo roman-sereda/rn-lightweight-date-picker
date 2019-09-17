@@ -14,7 +14,7 @@ const DatesManager = function(props){
         let minLimit = minDate ? new CustomDate(minDate) : false;
 
         if(start && end === false && mode !== MODE.SINGLE){
-            if(minRange) minLimit = start.addDays(minRange + 1);
+            if(minRange) minLimit = start.addDays(minRange - 1);
 
             if(maxRange){
                 let newMaxLimit = start.addDays(maxRange - 1);

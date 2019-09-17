@@ -125,7 +125,7 @@ class Calendar extends PureComponent{
     const { month, year, colors } = this.state;
     const {
       userStyles, minDate, maxDate, maxRange, minRange, mode, onDateChange, format, initialDate, rowPadding, rowHeight,
-      highlightToday } = this.props;
+      highlightToday, locale } = this.props;
 
     let pickerMode = ['single', 'range', 'both'].indexOf(mode) + 1;
     if(pickerMode === -1) pickerMode = 2;
@@ -136,6 +136,7 @@ class Calendar extends PureComponent{
         colors = {colors}
         userStyles = {userStyles}
         year = {year}
+        locale = {locale}
         onDateChange = {onDateChange}
         mode = {pickerMode}
         format = {format}
