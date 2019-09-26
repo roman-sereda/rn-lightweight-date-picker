@@ -1,6 +1,6 @@
 {
   "name": "rn-lightweight-date-picker",
-  "version": "0.1.7",
+  "version": "1.0.1",
   "description": "Lightweight date range picker with not dependencies for React Native.",
   "author": "Roman Sereda(roman.sereda@pm.me)",
   "main": "index.js",
@@ -50,6 +50,7 @@
   "jest": {
     "preset": "react-native"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/roman-sereda/rn-lightweight-date-picker.git"
