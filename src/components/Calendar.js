@@ -113,6 +113,21 @@ class Calendar extends PureComponent{
   }
 
   renderTopBar(){
+    const { year, month, monthNames, styles, fade } = this.state;
+
+    let monthName = monthNames[month];
+
+    return (
+      <View style = {styles.topBar}>
+        <Animated.View style = {[styles.head, { transform: [{ rotateX: this.state.fade.interpolate(rotateValues) }] }]}>
+          <Text style = {styles.subtitle}>{ year }</Text>
+          <Text style = {styles.title}>{ monthName }</Text>
+        </Animated.View>
+      </View>
+    );
+  }
+
+  renderTopBarWithControls(){
     const { year, month, monthNames, fade, styles } = this.state;
     const { leftControl, rightControl } = this.props;
 
@@ -125,7 +140,7 @@ class Calendar extends PureComponent{
               style = {[ styles.leftControl, styles.controls ]} onPress={() => this.prev()}>
             { leftControl }
           </TouchableOpacity>
-          <Animated.View style = {[styles.head, { transform: [{ rotateX: this.state.fade.interpolate(rotateValues) }] }]}>
+          <Animated.View style = {[styles.head, { transform: [{ rotateX: fade.interpolate(rotateValues) }] }]}>
             <Text style = {styles.subtitle}>{ year }</Text>
             <Text style = {styles.title}>{ monthName }</Text>
           </Animated.View>
@@ -135,7 +150,7 @@ class Calendar extends PureComponent{
             { rightControl }
           </TouchableOpacity>
         </View>
-    )
+    );
   }
 
   renderDatePicker(){
@@ -169,14 +184,15 @@ class Calendar extends PureComponent{
   }
 
   render(){
-    const { fade, styles } = this.state;
+    const { styles } = this.state;
+    const { showControls, rowHeight, rowPadding } = this.props;
 
     return(
-      <View style = {styles.wrapper}>
-        { this.renderTopBar() }
-        <View style = {styles.calendar}>
+      <View style = {[ styles.wrapper ]}>
+        { showControls ? this.renderTopBarWithControls() : this.renderTopBar() }
+        <View style = {[ styles.calendar, { height: rowHeight * 7 + rowPadding * 6 } ]}>
           { this.renderDaysOfTheWeek() }
-          <View>
+          <View style={{ overflow: 'hidden' }}>
             { this.renderDatePicker() }
           </View>
         </View>
@@ -198,6 +214,7 @@ Calendar.defaultProps = {
   maxDate: false,
   minDate: false,
   initialDate: new Date(),
+  showControls: false,
   leftControl: <Text>{ "<" }</Text>,
   rightControl: <Text>{ ">" }</Text>,
   rowHeight: 30,
@@ -218,6 +235,7 @@ Calendar.propTypes = {
   maxDate: PropTypes.oneOfType([ PropTypes.instanceOf(Date), PropTypes.oneOf([false]) ]),
   minDate: PropTypes.oneOfType([ PropTypes.instanceOf(Date), PropTypes.oneOf([false]) ]),
   initialDate: PropTypes.instanceOf(Date),
+  showControls: PropTypes.bool,
   leftControl: PropTypes.node,
   rightControl: PropTypes.node,
   rowHeight: PropTypes.number,
@@ -235,6 +253,7 @@ const getStyles = (colors, sizes) => ({
   },
   topBar: {
     backgroundColor: colors.topBar,
+    justifyContent: 'space-around',
     marginLeft: 10,
     marginRight: 10,
     flexDirection: 'row',
