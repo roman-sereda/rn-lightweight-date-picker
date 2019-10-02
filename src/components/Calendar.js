@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import DatePicker from './DatePicker';
 import helper from '../helper';
+import Swiper from './Swiper';
 
 class Calendar extends PureComponent{
   constructor(props){
@@ -85,6 +86,16 @@ class Calendar extends PureComponent{
     })
   }
 
+  next(){
+    const { month, year } = this.state;
+    this.setState(helper.addMonth({ month, year }));
+  }
+
+  prev(){
+    const { month, year } = this.state;
+    this.setState(helper.subtractMonth({ month, year }));
+  }
+
   nextMonth(){
     const { month, year, fade } = this.state;
     this.switchMonth(helper.addMonth({ month, year }));
@@ -131,7 +142,7 @@ class Calendar extends PureComponent{
     if(pickerMode === -1) pickerMode = 2;
 
     return(
-      <DatePicker
+      <Swiper
         initialDate = {initialDate}
         colors = {colors}
         userStyles = {userStyles}
@@ -145,6 +156,8 @@ class Calendar extends PureComponent{
         minRange = {minRange} maxRange = {maxRange}
         rowHeight = {rowHeight} rowPadding = {rowPadding}
         highlightToday = {highlightToday}
+        next = {() => this.next()}
+        prev = {() => this.prev()}
       />
     )
   }

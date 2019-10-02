@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { View } from 'react-native';
 import formatDate from '../FormatDate';
 import CustomDate from '../CustomDate';
 import { MODE } from '../constants';
@@ -85,7 +86,7 @@ class DatePicker extends PureComponent{
     params.start = start;
     params.end = end;
 
-    return this.dates.getDates(params);
+    return <View style={{ width: '33.3333%' }}>{ this.dates.getDates(params) }</View>;
   }
 }
 

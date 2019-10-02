@@ -33,10 +33,7 @@
     "react-native-testing-library": "^1.11.1",
     "react-test-renderer": "^16.9.0"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/roman-sereda/rn-lightweight-date-picker/blob/develop/LICENSE"
-  },
+  "license": "MIT",
   "keywords": [
     "react-native",
     "react native",
@@ -50,7 +47,6 @@
   "jest": {
     "preset": "react-native"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/roman-sereda/rn-lightweight-date-picker.git"
