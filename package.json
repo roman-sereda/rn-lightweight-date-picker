@@ -1,6 +1,6 @@
 {
   "name": "rn-lightweight-date-picker",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Lightweight date range picker with not dependencies for React Native.",
   "author": "Roman Sereda(roman.sereda@pm.me)",
   "main": "index.js",

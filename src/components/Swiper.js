@@ -25,7 +25,7 @@ export default class extends Component {
         const {dx, dy} = gestureState;
         return (Math.abs(dx) > touchThreshold) || (Math.abs(dy) > touchThreshold);
       },
-      onPanResponderGrant: (evt, gestureState) => { console.log('start'); swiping = true },
+      onPanResponderGrant: (evt, gestureState) => { swiping = true },
       onPanResponderRelease: (evt, gestureState) => {
         const { dx } = gestureState;
 
