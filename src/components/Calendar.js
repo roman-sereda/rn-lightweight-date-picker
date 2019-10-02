@@ -71,10 +71,10 @@ class Calendar extends PureComponent{
 
   fade(value){
     const { fade } = this.state;
-    const { fadeDuration } = this.props;
+    const { titleFadeDuration } = this.props;
 
     return new Promise((resolve, reject) => {
-      Animated.timing(this.state.fade, { toValue: value, duration: fadeDuration / 2 })
+      Animated.timing(this.state.fade, { toValue: value, duration: titleFadeDuration / 2 })
       .start(() => {
         resolve();
       });
@@ -100,16 +100,6 @@ class Calendar extends PureComponent{
   prev(callback){
     const { month, year } = this.state;
     this.switchMonth(helper.subtractMonth({ month, year }), callback);
-  }
-
-  nextMonth(){
-    const { month, year, fade } = this.state;
-    this.switchMonth(helper.addMonth({ month, year }));
-  }
-
-  prevMonth(){
-    const { month, year, fade } = this.state;
-    this.switchMonth(helper.subtractMonth({ month, year }));
   }
 
   renderTopBar(){
@@ -157,7 +147,7 @@ class Calendar extends PureComponent{
     const { month, year, colors } = this.state;
     const {
       userStyles, minDate, maxDate, maxRange, minRange, mode, onDateChange, format, initialDate, rowPadding, rowHeight,
-      highlightToday, locale } = this.props;
+      highlightToday, locale, swipeDuration } = this.props;
 
     let pickerMode = ['single', 'range', 'both'].indexOf(mode) + 1;
     if(pickerMode === -1) pickerMode = 2;
@@ -172,6 +162,7 @@ class Calendar extends PureComponent{
         onDateChange = {onDateChange}
         mode = {pickerMode}
         format = {format}
+        swipeDuration = {swipeDuration}
         month = {month}
         minDate = {minDate} maxDate = {maxDate}
         minRange = {minRange} maxRange = {maxRange}
@@ -206,7 +197,8 @@ Calendar.defaultProps = {
   format: false,
   userColors: {},
   userStyles: {},
-  fadeDuration: 300,
+  swipeDuration: 300,
+  titleFadeDuration: 300,
   mode: 'range',
   onDateChange: () => {},
   maxRange: false,
@@ -227,7 +219,8 @@ Calendar.propTypes = {
   format: PropTypes.oneOfType([ PropTypes.string, PropTypes.oneOf([false]) ]),
   userColors: PropTypes.object,
   userStyles: PropTypes.object,
-  fadeDuration: PropTypes.number,
+  titleFadeDuration: PropTypes.number,
+  swipeDuration: PropTypes.number,
   mode: PropTypes.oneOf([ 'both', 'single', 'range' ]),
   onDateChange: PropTypes.func,
   maxRange: PropTypes.oneOfType([ PropTypes.number, PropTypes.oneOf([false]) ]),

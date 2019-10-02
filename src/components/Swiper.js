@@ -7,11 +7,6 @@ const marginValues = {
   outputRange: ['0%', '-200%'],
 };
 
-const rotateValues = {
-  inputRange: [0, 360],
-  outputRange: ['0deg', '360deg'],
-};
-
 export default class extends Component {
   constructor(props){
     super(props);
@@ -68,7 +63,7 @@ export default class extends Component {
       this.position,
       {
         toValue: value,
-        duration: 400,
+        duration: this.props.swipeDuration,
       },
     ).start(() => {
       callback(() => this.position.setValue(this.startPosition));
@@ -77,7 +72,10 @@ export default class extends Component {
 
   render(){
     return(
-      <Animated.View style={{ flexDirection: 'row', width: '300%', marginLeft: this.position.interpolate(marginValues) }} {...this.panResponder.panHandlers}>
+      <Animated.View
+        style={{ flexDirection: 'row', width: '300%', marginLeft: this.position.interpolate(marginValues) }}
+        {...this.panResponder.panHandlers}
+      >
         { this.props.children }
       </Animated.View>
     );
