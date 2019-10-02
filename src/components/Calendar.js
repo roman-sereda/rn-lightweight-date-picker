@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import DatePicker from './DatePicker';
 import helper from '../helper';
-import Swiper from './Swiper';
 
 class Calendar extends PureComponent{
   constructor(props){
@@ -125,7 +124,7 @@ class Calendar extends PureComponent{
           </Animated.View>
           <TouchableOpacity
               testID="rightController"
-              style = {[ styles.rightControl, styles.controls ]} onPress={() => this.nextMonth()}>
+              style = {[ styles.rightControl, styles.controls ]} onPress={() => this.next()}>
             { rightControl }
           </TouchableOpacity>
         </View>
@@ -142,7 +141,7 @@ class Calendar extends PureComponent{
     if(pickerMode === -1) pickerMode = 2;
 
     return(
-      <Swiper
+      <DatePicker
         initialDate = {initialDate}
         colors = {colors}
         userStyles = {userStyles}

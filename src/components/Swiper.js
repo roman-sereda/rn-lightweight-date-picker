@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { PanResponder, Dimensions, Animated } from 'react-native';
-import DatePicker from './DatePicker';
 import helper from '../helper';
 
 const marginValues = {
@@ -15,14 +14,17 @@ export default class extends Component {
     let swiping = false;
     const width = Dimensions.get('window').width;
     const minDistToChangeMonth = width / 3;
+    const touchThreshold = 10;
 
     this.startPosition = 1;
     this.position = new Animated.Value(1);
 
     this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderGrant: (evt, gestureState) => swiping = true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        const {dx, dy} = gestureState;
+        return (Math.abs(dx) > touchThreshold) || (Math.abs(dy) > touchThreshold);
+      },
+      onPanResponderGrant: (evt, gestureState) => { console.log('start'); swiping = true },
       onPanResponderRelease: (evt, gestureState) => {
         const { dx } = gestureState;
 
@@ -70,14 +72,9 @@ export default class extends Component {
   }
 
   render(){
-    let nextDatePicker = helper.addMonth({ month: this.props.month, year: this.props.year });
-    let prevDatePicker = helper.subtractMonth({ month: this.props.month, year: this.props.year });
-
     return(
-      <Animated.View style={[{ flexDirection: 'row', width: '300%' }, { marginLeft: this.position.interpolate(marginValues) }]} {...this.panResponder.panHandlers}>
-        <DatePicker {...this.props} month={prevDatePicker.month} year={prevDatePicker.year} colors={{ dayText: 'red' }} />
-        <DatePicker {...this.props} colors={{ dayText: 'red' }} />
-        <DatePicker {...this.props} month={nextDatePicker.month} year={nextDatePicker.year} colors={{ dayText: 'red' }} />
+      <Animated.View style={{ flexDirection: 'row', width: '300%', marginLeft: this.position.interpolate(marginValues) }} {...this.panResponder.panHandlers}>
+        { this.props.children }
       </Animated.View>
     );
   }
