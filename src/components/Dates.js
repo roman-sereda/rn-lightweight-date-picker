@@ -125,10 +125,10 @@ const getStyles = (colors, sizes) => ({
     height: sizes.rowHeight
   },
   selectedEndBg: {
-    left: '-25%'
+    right: '50%'
   },
   selectedStartBg: {
-    right: '-25%'
+    left: '50%'
   },
   circle: {
     width: sizes.rowHeight + sizes.rowPadding,

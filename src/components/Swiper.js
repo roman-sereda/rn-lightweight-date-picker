@@ -14,6 +14,7 @@ export default class extends Component {
     let swiping = false;
     const width = Dimensions.get('window').width;
     const minDistToChangeMonth = width / 3;
+    const minSpeedToChangeMonth = 1.5;
     const touchThreshold = 10;
 
     this.startPosition = 1;
@@ -44,10 +45,10 @@ export default class extends Component {
         const { vx, dx } = gestureState;
 
         if(swiping){
-          if(vx > 2){
+          if(vx > minSpeedToChangeMonth){
             this.animate(0, (c) => { this.props.prev(c); });
             swiping = false;
-          }else if(vx < -2){
+          }else if(vx < -minSpeedToChangeMonth){
             this.animate(2, (c) => { this.props.next(c); });
             swiping = false;
           }else{

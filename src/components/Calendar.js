@@ -181,9 +181,9 @@ class Calendar extends PureComponent{
     return(
       <View style = {[ styles.wrapper ]}>
         { showControls ? this.renderTopBarWithControls() : this.renderTopBar() }
-        <View style = {[ styles.calendar, { height: rowHeight * 7 + rowPadding * 6 } ]}>
+        <View style = {[ styles.calendar ]}>
           { this.renderDaysOfTheWeek() }
-          <View style={{ overflow: 'hidden' }}>
+          <View style={{}}>
             { this.renderDatePicker() }
           </View>
         </View>
@@ -273,12 +273,13 @@ const getStyles = (colors, sizes) => ({
   },
   calendar: {
     backgroundColor: colors.calendar,
-    height: 6 * sizes.rowHeight + sizes.rowPadding * 5,
+    overflow: 'hidden',
+    height: 7 * sizes.rowHeight + sizes.rowPadding * 6,
   },
   daysOfTheWeek: {
     flexDirection: 'row',
-    height: 30,
-    marginBottom: 7,
+    height: sizes.rowHeight,
+    marginBottom: sizes.rowPadding,
   },
   dayOfTheWeek: {
     color: colors.dayOfTheWeek
