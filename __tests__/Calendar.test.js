@@ -10,7 +10,7 @@ let months = helper.getMonthNames('en');
 
 describe("Calendar with default props should", () => {
 
-    const { debug, update, getByText, getByTestId, queryByText } = render(<Calendar />);
+    const { debug, update, getByText, getByTestId, queryByText } = render(<Calendar showControls />);
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
@@ -57,14 +57,14 @@ describe("Calendar with default props should", () => {
 describe("Calendar with specified props should", () => {
 
     it("render specified date", () => {
-        const { getByText } = render(<Calendar initialDate = { new Date(2018,1,5) } />);
+        const { getByText } = render(<Calendar showControls initialDate = { new Date(2018,1,5) } />);
 
         getByText("2018");
         getByText(months[1]);
     });
 
     it("render specified controllers", () => {
-        const { getByText } = render(<Calendar leftControl = {<Text>ZZ</Text>} rightControl = {<Text>XX</Text>} />);
+        const { getByText } = render(<Calendar showControls leftControl = {<Text>ZZ</Text>} rightControl = {<Text>XX</Text>} />);
 
         getByText("ZZ");
         getByText("XX");
@@ -87,15 +87,15 @@ describe("Calendar with specified props should", () => {
 
         let returned = "";
 
-        const { getByText } = render(<Calendar
+        const { getByText, getAllByText } = render(<Calendar
             nitialDate = {new Date(2018,1,1)}
             onDateChange = {(data) => { returned = data } }
         />);
 
-        fireEvent.press(getByText("15"));
+        fireEvent.press(getAllByText("15")[0]);
         expect(returned.start instanceof Date).toBe(true);
 
-        fireEvent.press(getByText("25"));
+        fireEvent.press(getAllByText("25")[0]);
         expect(returned.start instanceof Date).toBe(true);
         expect(returned.end instanceof Date).toBe(true);
     });
@@ -104,25 +104,25 @@ describe("Calendar with specified props should", () => {
 
         let returned = "";
 
-        const { getByText } = render(<Calendar
+        const { getByText, getAllByText } = render(<Calendar
             initialDate = {new Date(2018,1,1)}
             format = "mm-dd-yyyy"
             onDateChange = {(data) => { returned = data } }
         />);
 
-        fireEvent.press(getByText("15"));
-        expect(returned.start).toBe("02-15-2018");
+        fireEvent.press(getAllByText("15")[0]);
+        expect(returned.start).toBe("01-15-2018");
 
-        fireEvent.press(getByText("25"));
-        expect(returned.start).toBe("02-15-2018");
-        expect(returned.end).toBe("02-25-2018");
+        fireEvent.press(getAllByText("25")[0]);
+        expect(returned.start).toBe("01-15-2018");
+        expect(returned.end).toBe("01-25-2018");
     });
 
     it("have working callback in single mode", () => {
 
         let returned = "";
 
-        const { getByText } = render(<Calendar
+        const { getByText, getAllByText } = render(<Calendar
             initialDate = {new Date(2018,1,1)}
             format = "mm-dd-yyyy"
             mode = "single"
@@ -130,8 +130,8 @@ describe("Calendar with specified props should", () => {
             onDateChange = {(data) => { returned = data } }
         />);
 
-        fireEvent.press(getByText("15"));
-        expect(returned).toBe("02-15-2018");
+        fireEvent.press(getAllByText("15")[0]);
+        expect(returned).toBe("01-15-2018");
     });
 
     it("be updated when props changed", () => {

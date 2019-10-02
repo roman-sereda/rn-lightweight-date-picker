@@ -97,7 +97,7 @@ class DatePicker extends PureComponent{
         { <View style={{ width: '33.3333%' }}>
           { this.dates.getDates({ ...params, month: prevDatePicker.month, year: prevDatePicker.year }) }
         </View> }
-        { <View style={{ width: '33.3333%' }}>{ this.dates.getDates(params) }</View> }
+        { <View testID="couldBeTested" style={{ width: '33.3333%' }}>{ this.dates.getDates(params) }</View> }
         { <View style={{ width: '33.3333%' }}>
           { this.dates.getDates({ ...params, month: nextDatePicker.month, year: nextDatePicker.year }) }
         </View> }
