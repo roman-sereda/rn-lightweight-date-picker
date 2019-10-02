@@ -10,17 +10,26 @@ describe("'DatePicker' should ", () => {
 
     const leftController = () => (queryByText("selectedRight"));
     const rightController = () => (queryByText("selectedRight"));
-    const date = (num) => (getByText(num));
+    const date = (num) => (getAllByText(num)[0]);
     const randomUnavailable = () => (getAllByTestId('unavailable')[0]);
     const all = (testID) => (getAllByTestId(testID));
     const isNull = (testID) => (queryByText(testID));
 
-    let { debug, queryByText, getByText, getAllByTestId, getByTestId } = render(<Calendar />);
-    let weeks = helper.getMonth(new Date().getFullYear(), new Date().getMonth());
+    let { debug, queryByText, getAllByText, getAllByTestId, getByTestId, getByA11yLabel } = render(<Calendar showControls />);
+    let a = getByTestId("couldBeTested");
+    let weeks = helper.getMonth(2014, 3);
+
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth();
 
     it("highlight sundays", () => {
         let sundays = weeks.length;
-        expect(getAllByTestId("weekend").length).toEqual(sundays);
+        let prevDate = helper.subtractMonth({ year, month});
+        let prevWeeks = helper.getMonth(prevDate.year, prevDate.month);
+        let nextDate = helper.subtractMonth({ year, month});
+        let nextWeeks = helper.getMonth(nextDate.year, nextDate.month);
+
+        expect(getAllByTestId("weekend").length).toEqual(sundays + prevWeeks.length + nextWeeks.length);
     });
 
     it("highlight selected dates and range between them", () => {
@@ -84,16 +93,17 @@ describe("Ranges should work correctly", () => {
 
     const leftController = () => (queryByText("selectedRight"));
     const rightController = () => (queryByText("selectedRight"));
-    const date = (num) => (getByText(num));
+    const date = (num) => (getAllByText(num)[0]);
     const randomUnavailable = () => (getAllByTestId('unavailable')[0]);
     const all = (testID) => (getAllByTestId(testID));
     const isNull = (testID) => (queryByText(testID));
 
-    let { debug, queryByText, getByText, getAllByTestId } = render(
+    let { debug, queryByText, getByText, getAllByTestId, getAllByText } = render(
         <Calendar
             initialDate = { new Date(2019,1,1) }
             minRange = {1}
             maxRange = {5}
+            showControls
             minDate = {new Date(2019,1,9)}
             maxDate = {new Date(2019,1,20)}
         />

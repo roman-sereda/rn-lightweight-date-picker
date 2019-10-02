@@ -1,7 +1,7 @@
 module.exports = {
   preset: 'react-native',
   collectCoverage: true,
-  coveragePathIgnorePatterns: ['./src/colors.js'],
+  coveragePathIgnorePatterns: ['./src/colors.js', './src/components/Swiper'],
   transform: {
     '\\.(js|jsx)?$': 'babel-jest',
   },

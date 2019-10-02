@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react';
+import {Animated, View} from 'react-native';
 import formatDate from '../FormatDate';
 import CustomDate from '../CustomDate';
 import { MODE } from '../constants';
+import Swiper from './Swiper';
 import Days from './Dates';
+import helper from "../helper";
 
 class DatePicker extends PureComponent{
   constructor(props){
@@ -80,12 +83,26 @@ class DatePicker extends PureComponent{
 
   render(){
     const { start, end } = this.state;
+    const { swipeDuration } = this.props;
 
     let params = Object.assign({}, this.props);
     params.start = start;
     params.end = end;
 
-    return this.dates.getDates(params);
+    let nextDatePicker = helper.addMonth({ month: this.props.month, year: this.props.year });
+    let prevDatePicker = helper.subtractMonth({ month: this.props.month, year: this.props.year });
+
+    return(
+      <Swiper next = {(c) => this.props.next(c)} prev = {(c) => this.props.prev(c)} swipeDuration={swipeDuration}>
+        { <View style={{ width: '33.3333%' }}>
+          { this.dates.getDates({ ...params, month: prevDatePicker.month, year: prevDatePicker.year }) }
+        </View> }
+        { <View testID="couldBeTested" style={{ width: '33.3333%' }}>{ this.dates.getDates(params) }</View> }
+        { <View style={{ width: '33.3333%' }}>
+          { this.dates.getDates({ ...params, month: nextDatePicker.month, year: nextDatePicker.year }) }
+        </View> }
+      </Swiper>
+    );
   }
 }
 

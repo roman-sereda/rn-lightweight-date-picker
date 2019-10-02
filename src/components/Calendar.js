@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 import DatePicker from './DatePicker';
 import helper from '../helper';
 
+const rotateValues = {
+  inputRange: [0, 360],
+  outputRange: ['0deg', '360deg'],
+};
+
 class Calendar extends PureComponent{
   constructor(props){
     super(props);
@@ -66,36 +71,53 @@ class Calendar extends PureComponent{
 
   fade(value){
     const { fade } = this.state;
-    const { fadeDuration } = this.props;
+    const { titleFadeDuration } = this.props;
 
     return new Promise((resolve, reject) => {
-      Animated.timing(this.state.fade, { toValue: value, duration: fadeDuration / 2 })
+      Animated.timing(this.state.fade, { toValue: value, duration: titleFadeDuration / 2 })
       .start(() => {
         resolve();
       });
     });
   }
 
-  switchMonth(date){
-    this.fade(0).then(() => {
+  switchMonth(date, callback){
+    this.state.fade.setValue(0);
 
+    this.fade(90).then(() => {
+      if(callback) callback();
       this.setState({ month: date.month, year: date.year }, () => {
-        this.fade(1);
+        this.fade(0);
       });
     })
   }
 
-  nextMonth(){
-    const { month, year, fade } = this.state;
-    this.switchMonth(helper.addMonth({ month, year }));
+  next(callback){
+    const { month, year } = this.state;
+    this.switchMonth(helper.addMonth({ month, year }), callback);
   }
 
-  prevMonth(){
-    const { month, year, fade } = this.state;
-    this.switchMonth(helper.subtractMonth({ month, year }));
+  prev(callback){
+    const { month, year } = this.state;
+    this.switchMonth(helper.subtractMonth({ month, year }), callback);
   }
 
   renderTopBar(){
+    const { year, month, monthNames, styles, fade } = this.state;
+
+    let monthName = monthNames[month];
+
+    return (
+      <View style = {styles.topBar}>
+        <Animated.View style = {[styles.head, { transform: [{ rotateX: this.state.fade.interpolate(rotateValues) }] }]}>
+          <Text style = {styles.subtitle}>{ year }</Text>
+          <Text style = {styles.title}>{ monthName }</Text>
+        </Animated.View>
+      </View>
+    );
+  }
+
+  renderTopBarWithControls(){
     const { year, month, monthNames, fade, styles } = this.state;
     const { leftControl, rightControl } = this.props;
 
@@ -105,27 +127,27 @@ class Calendar extends PureComponent{
         <View style = {styles.topBar}>
           <TouchableOpacity
               testID="leftController"
-              style = {[ styles.leftControl, styles.controls ]} onPress={() => this.prevMonth()}>
+              style = {[ styles.leftControl, styles.controls ]} onPress={() => this.prev()}>
             { leftControl }
           </TouchableOpacity>
-          <Animated.View style = {[styles.head, { opacity: fade } ]}>
+          <Animated.View style = {[styles.head, { transform: [{ rotateX: fade.interpolate(rotateValues) }] }]}>
             <Text style = {styles.subtitle}>{ year }</Text>
             <Text style = {styles.title}>{ monthName }</Text>
           </Animated.View>
           <TouchableOpacity
               testID="rightController"
-              style = {[ styles.rightControl, styles.controls ]} onPress={() => this.nextMonth()}>
+              style = {[ styles.rightControl, styles.controls ]} onPress={() => this.next()}>
             { rightControl }
           </TouchableOpacity>
         </View>
-    )
+    );
   }
 
   renderDatePicker(){
     const { month, year, colors } = this.state;
     const {
       userStyles, minDate, maxDate, maxRange, minRange, mode, onDateChange, format, initialDate, rowPadding, rowHeight,
-      highlightToday, locale } = this.props;
+      highlightToday, locale, swipeDuration } = this.props;
 
     let pickerMode = ['single', 'range', 'both'].indexOf(mode) + 1;
     if(pickerMode === -1) pickerMode = 2;
@@ -140,26 +162,30 @@ class Calendar extends PureComponent{
         onDateChange = {onDateChange}
         mode = {pickerMode}
         format = {format}
+        swipeDuration = {swipeDuration}
         month = {month}
         minDate = {minDate} maxDate = {maxDate}
         minRange = {minRange} maxRange = {maxRange}
         rowHeight = {rowHeight} rowPadding = {rowPadding}
         highlightToday = {highlightToday}
+        next = {(c) => this.next(c)}
+        prev = {(c) => this.prev(c)}
       />
     )
   }
 
   render(){
-    const { fade, styles } = this.state;
+    const { styles } = this.state;
+    const { showControls, rowHeight, rowPadding } = this.props;
 
     return(
-      <View style = {styles.wrapper}>
-        { this.renderTopBar() }
-        <View style = {styles.calendar}>
+      <View style = {[ styles.wrapper ]}>
+        { showControls ? this.renderTopBarWithControls() : this.renderTopBar() }
+        <View style = {[ styles.calendar ]}>
           { this.renderDaysOfTheWeek() }
-          <Animated.View style = {{ opacity: fade }}>
+          <View style={{}}>
             { this.renderDatePicker() }
-          </Animated.View>
+          </View>
         </View>
       </View>
     )
@@ -171,7 +197,8 @@ Calendar.defaultProps = {
   format: false,
   userColors: {},
   userStyles: {},
-  fadeDuration: 300,
+  swipeDuration: 300,
+  titleFadeDuration: 300,
   mode: 'range',
   onDateChange: () => {},
   maxRange: false,
@@ -179,6 +206,7 @@ Calendar.defaultProps = {
   maxDate: false,
   minDate: false,
   initialDate: new Date(),
+  showControls: false,
   leftControl: <Text>{ "<" }</Text>,
   rightControl: <Text>{ ">" }</Text>,
   rowHeight: 30,
@@ -191,7 +219,8 @@ Calendar.propTypes = {
   format: PropTypes.oneOfType([ PropTypes.string, PropTypes.oneOf([false]) ]),
   userColors: PropTypes.object,
   userStyles: PropTypes.object,
-  fadeDuration: PropTypes.number,
+  titleFadeDuration: PropTypes.number,
+  swipeDuration: PropTypes.number,
   mode: PropTypes.oneOf([ 'both', 'single', 'range' ]),
   onDateChange: PropTypes.func,
   maxRange: PropTypes.oneOfType([ PropTypes.number, PropTypes.oneOf([false]) ]),
@@ -199,6 +228,7 @@ Calendar.propTypes = {
   maxDate: PropTypes.oneOfType([ PropTypes.instanceOf(Date), PropTypes.oneOf([false]) ]),
   minDate: PropTypes.oneOfType([ PropTypes.instanceOf(Date), PropTypes.oneOf([false]) ]),
   initialDate: PropTypes.instanceOf(Date),
+  showControls: PropTypes.bool,
   leftControl: PropTypes.node,
   rightControl: PropTypes.node,
   rowHeight: PropTypes.number,
@@ -216,6 +246,7 @@ const getStyles = (colors, sizes) => ({
   },
   topBar: {
     backgroundColor: colors.topBar,
+    justifyContent: 'space-around',
     marginLeft: 10,
     marginRight: 10,
     flexDirection: 'row',
@@ -242,12 +273,13 @@ const getStyles = (colors, sizes) => ({
   },
   calendar: {
     backgroundColor: colors.calendar,
-    height: 6 * sizes.rowHeight + sizes.rowPadding * 5,
+    overflow: 'hidden',
+    height: 7 * sizes.rowHeight + sizes.rowPadding * 6,
   },
   daysOfTheWeek: {
     flexDirection: 'row',
-    height: 30,
-    marginBottom: 7,
+    height: sizes.rowHeight,
+    marginBottom: sizes.rowPadding,
   },
   dayOfTheWeek: {
     color: colors.dayOfTheWeek

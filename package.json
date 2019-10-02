@@ -1,6 +1,6 @@
 {
   "name": "rn-lightweight-date-picker",
-  "version": "0.1.7",
+  "version": "1.1.0",
   "description": "Lightweight date range picker with not dependencies for React Native.",
   "author": "Roman Sereda(roman.sereda@pm.me)",
   "main": "index.js",
@@ -33,10 +33,7 @@
     "react-native-testing-library": "^1.11.1",
     "react-test-renderer": "^16.9.0"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/roman-sereda/rn-lightweight-date-picker/blob/develop/LICENSE"
-  },
+  "license": "MIT",
   "keywords": [
     "react-native",
     "react native",
