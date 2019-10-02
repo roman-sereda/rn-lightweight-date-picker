@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 import DatePicker from './DatePicker';
 import helper from '../helper';
 
+const rotateValues = {
+  inputRange: [0, 360],
+  outputRange: ['0deg', '360deg'],
+};
+
 class Calendar extends PureComponent{
   constructor(props){
     super(props);
@@ -76,23 +81,25 @@ class Calendar extends PureComponent{
     });
   }
 
-  switchMonth(date){
-    this.fade(0).then(() => {
+  switchMonth(date, callback){
+    this.state.fade.setValue(0);
 
+    this.fade(90).then(() => {
+      if(callback) callback();
       this.setState({ month: date.month, year: date.year }, () => {
-        this.fade(1);
+        this.fade(0);
       });
     })
   }
 
-  next(){
+  next(callback){
     const { month, year } = this.state;
-    this.setState(helper.addMonth({ month, year }));
+    this.switchMonth(helper.addMonth({ month, year }), callback);
   }
 
-  prev(){
+  prev(callback){
     const { month, year } = this.state;
-    this.setState(helper.subtractMonth({ month, year }));
+    this.switchMonth(helper.subtractMonth({ month, year }), callback);
   }
 
   nextMonth(){
@@ -115,10 +122,10 @@ class Calendar extends PureComponent{
         <View style = {styles.topBar}>
           <TouchableOpacity
               testID="leftController"
-              style = {[ styles.leftControl, styles.controls ]} onPress={() => this.prevMonth()}>
+              style = {[ styles.leftControl, styles.controls ]} onPress={() => this.prev()}>
             { leftControl }
           </TouchableOpacity>
-          <Animated.View style = {[styles.head, { opacity: fade } ]}>
+          <Animated.View style = {[styles.head, { transform: [{ rotateX: this.state.fade.interpolate(rotateValues) }] }]}>
             <Text style = {styles.subtitle}>{ year }</Text>
             <Text style = {styles.title}>{ monthName }</Text>
           </Animated.View>
@@ -155,8 +162,8 @@ class Calendar extends PureComponent{
         minRange = {minRange} maxRange = {maxRange}
         rowHeight = {rowHeight} rowPadding = {rowPadding}
         highlightToday = {highlightToday}
-        next = {() => this.next()}
-        prev = {() => this.prev()}
+        next = {(c) => this.next(c)}
+        prev = {(c) => this.prev(c)}
       />
     )
   }
@@ -169,9 +176,9 @@ class Calendar extends PureComponent{
         { this.renderTopBar() }
         <View style = {styles.calendar}>
           { this.renderDaysOfTheWeek() }
-          <Animated.View style = {{ opacity: fade }}>
+          <View>
             { this.renderDatePicker() }
-          </Animated.View>
+          </View>
         </View>
       </View>
     )

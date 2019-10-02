@@ -67,7 +67,6 @@ class DatePicker extends PureComponent{
   }
 
   select(date){
-    console.log('select')
     const { mode } = this.props;
     const { start, end } = this.state;
 
@@ -93,10 +92,10 @@ class DatePicker extends PureComponent{
     let prevDatePicker = helper.subtractMonth({ month: this.props.month, year: this.props.year });
 
     return(
-      <Swiper next = {() => this.props.next()} prev = {() => this.props.prev()}>
-        { <View style={{ width: '33.3333%' }}>{ this.dates.getDates({ ...params, month: prevDatePicker.month, year: prevDatePicker.year }) }</View> }
-        { <View style={{ width: '33.3333%' }}>{ this.dates.getDates(params) }</View> }
-        { <View style={{ width: '33.3333%' }}>{ this.dates.getDates({ ...params, month: nextDatePicker.month, year: nextDatePicker.year }) }</View> }
+      <Swiper next = {(c) => this.props.next(c)} prev = {(c) => this.props.prev(c)}>
+        { <View style={{ width: '33.3333%', backgroundColor: 'white' }}>{ this.dates.getDates({ ...params, month: prevDatePicker.month, year: prevDatePicker.year }) }</View> }
+        { <View style={{ width: '33.3333%', backgroundColor: 'white' }}>{ this.dates.getDates(params) }</View> }
+        { <View style={{ width: '33.3333%', backgroundColor: 'white' }}>{ this.dates.getDates({ ...params, month: nextDatePicker.month, year: nextDatePicker.year }) }</View> }
       </Swiper>
     );
   }

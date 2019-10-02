@@ -7,6 +7,11 @@ const marginValues = {
   outputRange: ['0%', '-200%'],
 };
 
+const rotateValues = {
+  inputRange: [0, 360],
+  outputRange: ['0deg', '360deg'],
+};
+
 export default class extends Component {
   constructor(props){
     super(props);
@@ -30,9 +35,9 @@ export default class extends Component {
 
         if(swiping){
           if(dx > minDistToChangeMonth){
-            this.animate(0, () => { this.props.prev(); });
+            this.animate(0, (c) => { this.props.prev(c); });
           } else if(dx < -minDistToChangeMonth / 3){
-            this.animate(2, () => { this.props.next(); });
+            this.animate(2, (c) => { this.props.next(c); });
           }else{
             this.animate(this.startPosition, () => {});
           }
@@ -45,10 +50,10 @@ export default class extends Component {
 
         if(swiping){
           if(vx > 2){
-            this.animate(0, () => { this.props.prev(); });
+            this.animate(0, (c) => { this.props.prev(c); });
             swiping = false;
           }else if(vx < -2){
-            this.animate(2, () => { this.props.next(); });
+            this.animate(2, (c) => { this.props.next(c); });
             swiping = false;
           }else{
             this.position.setValue(this.startPosition - dx / width);
@@ -66,8 +71,7 @@ export default class extends Component {
         duration: 400,
       },
     ).start(() => {
-      callback();
-      this.position.setValue(this.startPosition);
+      callback(() => this.position.setValue(this.startPosition));
     });
   }
 
