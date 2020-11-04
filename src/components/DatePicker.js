@@ -29,6 +29,17 @@ class DatePicker extends PureComponent{
       this.updateDates();
       this.forceUpdate();
     }
+    this.updateSelection(prevProps);
+  }
+
+  updateSelection(prevProps) {
+    const { start, end } = this.props;
+    if (
+      (start != null && prevProps.start !== start) ||
+      (end != null && prevProps.end !== end)
+    ) {
+      this.setState({ start, end });
+    }
   }
 
   updateDates(){
@@ -37,7 +48,7 @@ class DatePicker extends PureComponent{
   }
 
   reset(){
-    this.setState({ start: false, end: false})
+    this.setState({ start: false, end: false}, () => { this.sendCallback() });
   }
 
   formatDate(date){
