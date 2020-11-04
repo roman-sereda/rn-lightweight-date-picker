@@ -50,12 +50,6 @@ class Calendar extends PureComponent{
       newState.monthNames = helper.getMonthNames(locale);
     }
 
-    // const { start, end } = this.props;
-    // if (prevProps.start !== start || prevProps.end !== end) {
-    //   newState.start = start;
-    //   newState.end = end;
-    // }
-
     return newState;
   }
 

@@ -11,9 +11,12 @@ class DatePicker extends PureComponent{
   constructor(props){
     super(props);
 
+    let { start, end } = this.props;
+    start = !!start && new CustomDate(start);
+    end = !!end && new CustomDate(end);
     this.state = {
-      start: false,
-      end: false,
+      start,
+      end,
     };
 
     this.dates = new Days((date) => this.select(date), () => this.reset());
@@ -28,17 +31,6 @@ class DatePicker extends PureComponent{
 
       this.updateDates();
       this.forceUpdate();
-    }
-    this.updateSelection(prevProps);
-  }
-
-  updateSelection(prevProps) {
-    const { start, end } = this.props;
-    if (
-      (start != null && prevProps.start !== start) ||
-      (end != null && prevProps.end !== end)
-    ) {
-      this.setState({ start, end });
     }
   }
 
