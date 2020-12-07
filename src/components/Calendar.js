@@ -147,7 +147,7 @@ class Calendar extends PureComponent{
     const { month, year, colors } = this.state;
     const {
       userStyles, minDate, maxDate, maxRange, minRange, mode, onDateChange, format, initialDate, rowPadding, rowHeight,
-      highlightToday, locale, swipeDuration } = this.props;
+      highlightToday, locale, swipeDuration, start, end } = this.props;
 
     let pickerMode = ['single', 'range', 'both'].indexOf(mode) + 1;
     if(pickerMode === -1) pickerMode = 2;
@@ -168,6 +168,8 @@ class Calendar extends PureComponent{
         minRange = {minRange} maxRange = {maxRange}
         rowHeight = {rowHeight} rowPadding = {rowPadding}
         highlightToday = {highlightToday}
+        start={start}
+        end={end}
         next = {(c) => this.next(c)}
         prev = {(c) => this.prev(c)}
       />
