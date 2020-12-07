@@ -3,7 +3,7 @@
 
 <img src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" data-canonical-src="https://media.giphy.com/media/cPTicQKsaMlxFc7udk/giphy.gif" width="366.3" height="300" />
 
-Lightweight date range picker with not dependencies for React Native.
+Lightweight date range picker without dependencies for React Native.
 ## Install
 ```sh
 $ npm i rn-lightweight-date-picker --save
@@ -51,9 +51,11 @@ All properties are optional
 | **`maxRange`** | `Number` or `false` | false |  Maximum avaliable size of selected range. |
 | **`minDate`** | `Date` or `false` | false | Minimum avaliable date to be selected. . |
 | **`maxDate`** | `Date` or `false` | false | Maximum avaliable date to be selected. |
-| **`mode`** | `String` | `range` | `single` or `range`. Give opportunity to select only one date or range(In range you can select one date too). |
-| **`fadeDuration`** | `Number` | 300 | Month switching duration in ms. |
+| **`mode`** | `String` | `range` | `single` or `range`. Gives opportunity to select only one date or range(If `range` you can select one date too). |
+| **`titleFadeDuration`** | `Number` | 300 | Title switching duration in ms. |
+| **`swipeDuration`** | `Number` | 300 | Month switching duration in ms. |
 | **`initialDate`** | `Date` | new Date() | This date will be shown in calendar on load. Default is Current Time. |
+| **`showControls`** | `Bool` | false | Specified if arrows controls are visible(doesnt disable swipes). |
 | **`leftControl`** | `Component` | `<Text>{ "<" }</Text>` | Specified left control. |
 | **`RightControl`** | `Component` | `<Text>{ ">" }</Text>` | Specified right control. |
 | **`highlightToday`**| `Bool` | true | Specified if current date should be highlighted. |
