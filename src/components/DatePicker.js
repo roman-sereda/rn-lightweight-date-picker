@@ -6,6 +6,7 @@ import { MODE } from '../constants';
 import Swiper from './Swiper';
 import Days from './Dates';
 import helper from "../helper";
+import DatesManager from "../DatesManager";
 
 class DatePicker extends PureComponent{
   constructor(props){
@@ -86,7 +87,7 @@ class DatePicker extends PureComponent{
 
   render(){
     const { start, end } = this.state;
-    const { swipeDuration } = this.props;
+    const { swipeDuration, week } = this.props;
 
     let params = Object.assign({}, this.props);
     params.start = start;
@@ -95,14 +96,37 @@ class DatePicker extends PureComponent{
     let nextDatePicker = helper.addMonth({ month: this.props.month, year: this.props.year });
     let prevDatePicker = helper.subtractMonth({ month: this.props.month, year: this.props.year });
 
+    let datesManager = new DatesManager({ ...params, week: params.minimized ? params.week : null });
+    let prevDatesManager = {}, nextDatesManager = {}, padding = 1;
+
+    if(params.minimized){
+      if(week === 0){
+        if(datesManager.weeks[0][0].day === 1){
+          padding = 0;
+        }
+        prevDatesManager = new DatesManager({ ...params, week: 'last', month: prevDatePicker.month, year: prevDatePicker.year, padding });
+      }else{
+        prevDatesManager = new DatesManager({ ...params, week: week - 1 });
+      }
+
+      if(datesManager.weeksCount <= week + 2){
+        nextDatesManager = new DatesManager({ ...params, week: 0, month: nextDatePicker.month, year: nextDatePicker.year });
+      }else{
+        nextDatesManager = new DatesManager({ ...params, week: week + 1 });
+      }
+    }else{
+      prevDatesManager = new DatesManager({ ...params, month: prevDatePicker.month, year: prevDatePicker.year, padding });
+      nextDatesManager = new DatesManager({ ...params, month: nextDatePicker.month, year: nextDatePicker.year });
+    }
+
     return(
-      <Swiper next = {(c) => this.props.next(c)} prev = {(c) => this.props.prev(c)} swipeDuration={swipeDuration}>
+      <Swiper next = {(c) => this.props.next(c)} prev = {(c) => this.props.prev(c, padding)} swipeDuration={swipeDuration}>
         { <View style={{ width: '33.3333%' }}>
-          { this.dates.getDates({ ...params, month: prevDatePicker.month, year: prevDatePicker.year }) }
+          { this.dates.renderDates(prevDatesManager) }
         </View> }
-        { <View testID="couldBeTested" style={{ width: '33.3333%' }}>{ this.dates.getDates(params) }</View> }
+        { <View testID="couldBeTested" style={{ width: '33.3333%' }}>{ this.dates.renderDates(datesManager) }</View> }
         { <View style={{ width: '33.3333%' }}>
-          { this.dates.getDates({ ...params, month: nextDatePicker.month, year: nextDatePicker.year }) }
+          { this.dates.renderDates(nextDatesManager) }
         </View> }
       </Swiper>
     );

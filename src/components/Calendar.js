@@ -18,7 +18,7 @@ class Calendar extends PureComponent{
 
     this.state = {
       ...newState,
-      fade: new Animated.Value(1),
+      fade: new Animated.Value(1)
     };
   }
 
@@ -40,9 +40,11 @@ class Calendar extends PureComponent{
       newState = { styles, colors }
     }
 
-    if(!prevProps.initialDate || (prevProps.initialDate.getTime() !== initialDate.getTime())){
+    if(!prevProps.initialDate){
+
       newState.month = initialDate.getMonth();
       newState.year = initialDate.getFullYear();
+      newState.week = Math.ceil((initialDate.getDate() - 1 - initialDate.getDay()) / 7);
     }
 
     if(prevProps.locale !== locale){
@@ -81,25 +83,47 @@ class Calendar extends PureComponent{
     });
   }
 
-  switchMonth(date, callback){
+  switchMonth(date, callback, week){
     this.state.fade.setValue(0);
 
     this.fade(90).then(() => {
       if(callback) callback();
-      this.setState({ month: date.month, year: date.year }, () => {
+      this.setState({ month: date.month, year: date.year, week }, () => {
         this.fade(0);
       });
     })
   }
 
   next(callback){
-    const { month, year } = this.state;
-    this.switchMonth(helper.addMonth({ month, year }), callback);
+    const { month, year, week } = this.state;
+
+    if(this.props.minimized){
+      const weeksInCurrentMonth = helper.weekCount({ year, month });
+      if(weeksInCurrentMonth === week + 2){
+        this.switchMonth(helper.addMonth({ month, year }), callback, 0);
+      }else{
+        if(callback) callback();
+        this.setState({ week: week + 1 });
+      }
+    }else{
+      this.switchMonth(helper.addMonth({ month, year }), callback, week);
+    }
   }
 
-  prev(callback){
-    const { month, year } = this.state;
-    this.switchMonth(helper.subtractMonth({ month, year }), callback);
+  prev(callback, padding = 1){
+    const { month, year, week } = this.state;
+
+    if(this.props.minimized){
+      if(week === 0){
+        const weeksInPrevMonth = helper.weekCount(helper.subtractMonth({ month, year }));
+        this.switchMonth(helper.subtractMonth({ month, year }), callback, weeksInPrevMonth - padding - 1);
+      }else{
+        if(callback) callback();
+        this.setState({ week: week - 1 })
+      }
+    }else{
+      this.switchMonth(helper.subtractMonth({ month, year }), callback, week);
+    }
   }
 
   renderTopBar(){
@@ -111,7 +135,7 @@ class Calendar extends PureComponent{
       <View style = {styles.topBar}>
         <Animated.View style = {[styles.head, { transform: [{ rotateX: this.state.fade.interpolate(rotateValues) }] }]}>
           <Text style = {styles.subtitle}>{ year }</Text>
-          <Text style = {styles.title}>{ monthName }</Text>
+          <Text style = {styles.title}>{ monthName.charAt(0).toUpperCase() + monthName.slice(1) }</Text>
         </Animated.View>
       </View>
     );
@@ -132,7 +156,7 @@ class Calendar extends PureComponent{
           </TouchableOpacity>
           <Animated.View style = {[styles.head, { transform: [{ rotateX: fade.interpolate(rotateValues) }] }]}>
             <Text style = {styles.subtitle}>{ year }</Text>
-            <Text style = {styles.title}>{ monthName }</Text>
+            <Text style = {styles.title}>{ monthName.charAt(0).toUpperCase() + monthName.slice(1) }</Text>
           </Animated.View>
           <TouchableOpacity
               testID="rightController"
@@ -144,10 +168,10 @@ class Calendar extends PureComponent{
   }
 
   renderDatePicker(){
-    const { month, year, colors } = this.state;
+    const { month, year, colors, week } = this.state;
     const {
       userStyles, minDate, maxDate, maxRange, minRange, mode, onDateChange, format, initialDate, rowPadding, rowHeight,
-      highlightToday, locale, swipeDuration, start, end } = this.props;
+      highlightToday, locale, swipeDuration, start, end, minimized } = this.props;
 
     let pickerMode = ['single', 'range', 'both'].indexOf(mode) + 1;
     if(pickerMode === -1) pickerMode = 2;
@@ -159,6 +183,7 @@ class Calendar extends PureComponent{
         userStyles = {userStyles}
         year = {year}
         locale = {locale}
+        week = {week}
         onDateChange = {onDateChange}
         mode = {pickerMode}
         format = {format}
@@ -170,8 +195,9 @@ class Calendar extends PureComponent{
         highlightToday = {highlightToday}
         start={start}
         end={end}
+        minimized={minimized}
         next = {(c) => this.next(c)}
-        prev = {(c) => this.prev(c)}
+        prev = {(c, padding) => this.prev(c, padding)}
       />
     )
   }
@@ -196,6 +222,7 @@ class Calendar extends PureComponent{
 
 Calendar.defaultProps = {
   locale: 'en',
+  minimized: false,
   format: false,
   userColors: {},
   userStyles: {},
@@ -217,6 +244,7 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
+  minimized: PropTypes.bool,
   locale: PropTypes.string,
   format: PropTypes.oneOfType([ PropTypes.string, PropTypes.oneOf([false]) ]),
   userColors: PropTypes.object,
@@ -276,11 +304,9 @@ const getStyles = (colors, sizes) => ({
   calendar: {
     backgroundColor: colors.calendar,
     overflow: 'hidden',
-    height: 7 * sizes.rowHeight + sizes.rowPadding * 6,
   },
   daysOfTheWeek: {
     flexDirection: 'row',
-    height: sizes.rowHeight,
     marginBottom: sizes.rowPadding,
   },
   dayOfTheWeek: {

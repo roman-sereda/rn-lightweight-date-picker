@@ -95,9 +95,7 @@ export default class {
     return <View style = {[ this.styles.circle, style ]}>{ child }</View>
   }
 
-  getDates(props){
-    let datesManager = new DatesManager(props);
-
+  renderDates(datesManager){
     return datesManager.weeks.map((week, weekIndex) => {
       return(<View style = {this.styles.week} key = {week[0].day + ' week' + week[0].month}>{
         week.map((date, dayIndex) => {

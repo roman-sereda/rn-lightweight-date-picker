@@ -3,7 +3,7 @@ import {MODE} from "./constants";
 import helper from './helper';
 
 const DatesManager = function(props){
-    const { month, year, initialDate, start, end, maxDate, minDate, minRange, maxRange, mode, highlightToday } = props;
+    const { month, year, initialDate, start, end, maxDate, minDate, minRange, maxRange, mode, highlightToday, padding } = props;
 
     /* calendar has limits, if date is before minLimit or after maxLimit - it will become unavailable to select
      limits calculates from minDate / maxDate or minRange / maxRange (false values == no limits)
@@ -68,6 +68,17 @@ const DatesManager = function(props){
 
     // here we get array of weeks with dates of chosen month
     this.weeks = helper.getMonth(year, month);
+
+    this.weeksCount = this.weeks.length;
+
+    if(props.minimized){
+        if(props.week === 'last'){
+            this.weeks = [this.weeks[this.weeks.length - padding - 1]];
+        }else{
+            this.weeks = [this.weeks[props.week]];
+        }
+    }
+
     let weeksCount = this.weeks.length - 1;
     let initialDay = new CustomDate(initialDate);
     // we iterate calendar page, this variables shows if iteration has reached `start` and `end` of selected date range

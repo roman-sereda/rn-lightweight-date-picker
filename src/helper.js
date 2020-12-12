@@ -47,6 +47,15 @@ const subtractMonth = (_date) => {
   return date;
 };
 
+const weekCount = (_date) => {
+  let firstOfMonth = new Date(_date.year, _date.month, 1);
+  let lastOfMonth = new Date(_date.year, _date.month + 1, 0);
+
+  let used = firstOfMonth.getDay() + lastOfMonth.getDate();
+
+  return Math.ceil( used / 7);
+}
+
 const addMonth = (_date) => {
   let date = _date;
 
@@ -115,6 +124,7 @@ const mergeStyles = (_styles, _newStyles, userColors, sizes = {}) => {
     mergeColors,
     getMonthNames,
     getDayNames,
+    weekCount,
     subtractMonth,
     getMonth,
     addMonth
