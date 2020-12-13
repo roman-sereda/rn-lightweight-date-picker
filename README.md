@@ -23,8 +23,12 @@ $ npm i rn-lightweight-date-picker --save
   render(){
     return(
       <Calendar
-        locale = "ru"
-        userStyles = {{ topBar: { controls: 'flex-start' }}}
+        userStyles = {{ 
+          selectedDay: { 
+            color: "#7300e6",
+            backgroundColor: "#f2e6ff"
+          }
+        }}
         userColors = {{ title: 'blue' }}
         maxRange = {10}
         minDate = {this.state.minDate}
