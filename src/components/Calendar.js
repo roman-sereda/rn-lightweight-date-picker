@@ -74,7 +74,7 @@ class Calendar extends PureComponent{
     const { titleFadeDuration } = this.props;
 
     return new Promise((resolve, reject) => {
-      Animated.timing(this.state.fade, { toValue: value, duration: titleFadeDuration / 2 })
+      Animated.timing(this.state.fade, { toValue: value, duration: titleFadeDuration / 2, useNativeDriver: true })
       .start(() => {
         resolve();
       });
