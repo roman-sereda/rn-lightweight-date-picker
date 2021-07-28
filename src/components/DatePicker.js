@@ -54,8 +54,8 @@ class DatePicker extends PureComponent{
 
       return newDate;
     }
-
-    return date;
+    // Return selected date or undefined, not false
+    return undefined;
   }
 
   sendCallback(){
