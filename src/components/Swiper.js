@@ -65,6 +65,7 @@ export default class extends Component {
       {
         toValue: value,
         duration: this.props.swipeDuration,
+        useNativeDriver: false
       },
     ).start(() => {
       callback(() => this.position.setValue(this.startPosition));
