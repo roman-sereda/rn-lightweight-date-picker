@@ -197,6 +197,7 @@ class Calendar extends PureComponent {
       swipeDuration,
       start,
       end,
+      weekStartsOn,
     } = this.props;
 
     let pickerMode = ["single", "range", "both"].indexOf(mode) + 1;
@@ -225,6 +226,7 @@ class Calendar extends PureComponent {
         end={end}
         next={(c) => this.next(c)}
         prev={(c) => this.prev(c)}
+        weekStartsOn={weekStartsOn}
       />
     );
   }
@@ -265,6 +267,7 @@ Calendar.defaultProps = {
   rowHeight: 30,
   rowPadding: 7,
   highlightToday: true,
+  weekStartsOn: "mon",
 };
 
 Calendar.propTypes = {
@@ -293,6 +296,7 @@ Calendar.propTypes = {
   rowHeight: PropTypes.number,
   rowPadding: PropTypes.number,
   highlightToday: PropTypes.bool,
+  weekStartsOn: PropTypes.oneOf(["sun", "mon"]),
 };
 
 const getStyles = (colors, sizes) => ({

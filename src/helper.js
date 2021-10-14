@@ -2,11 +2,20 @@ import { colors } from "./constants";
 
 let getMonthSize = (year, month) => new Date(year, month + 1, 0).getDate();
 let firstDayOfMonth = (year, month) => new Date(year, month, 1);
+let dayOfWeekIndex = (day, weekStartsOn) => {
+  const index = day.getDay();
+  if (weekStartsOn === "sun") {
+    return index;
+  }
+
+  // Week starts on Monday, move Sunday to weekend
+  return index === 0 ? 6 : index - 1;
+};
 
 // this method returns arrays of integers with dates for calendar page
 // how do we get this?
 
-const getMonth = (year, month) => {
+const getMonth = (year, month, weekStartsOn) => {
   let prevMonth = subtractMonth({ year, month });
   prevMonth.size = getMonthSize(prevMonth.year, prevMonth.month);
 
@@ -15,8 +24,8 @@ const getMonth = (year, month) => {
 
   let monthSize = getMonthSize(year, month),
     data = [];
-  let firstDay = firstDayOfMonth(year, month),
-    firstDayWeekIndex = firstDay.getDay();
+  let firstDay = firstDayOfMonth(year, month);
+  let firstDayWeekIndex = dayOfWeekIndex(firstDay, weekStartsOn);
   let weeksCount = Math.ceil((monthSize + firstDayWeekIndex) / 7);
 
   let getDate = (index) => {

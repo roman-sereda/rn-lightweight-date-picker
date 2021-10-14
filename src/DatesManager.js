@@ -15,6 +15,7 @@ const DatesManager = function (props) {
     maxRange,
     mode,
     highlightToday,
+    weekStartsOn,
   } = props;
 
   /* calendar has limits, if date is before minLimit or after maxLimit - it will become unavailable to select
@@ -61,7 +62,10 @@ const DatesManager = function (props) {
     if (initialDay.isEqualTo(date) && highlightToday)
       return { date, isInitial: true };
 
-    return { isWeekend: dayIndex === 0 };
+    // if weekStartsOn Monday, then Sunday index is 6
+    return {
+      isWeekend: weekStartsOn === "mon" ? dayIndex === 6 : dayIndex === 0,
+    };
   };
 
   this.isBeforeMinLimit = (date) => {
@@ -83,7 +87,7 @@ const DatesManager = function (props) {
   const { minLimit, maxLimit } = this.calculateBoundaries();
 
   // here we get array of weeks with dates of chosen month
-  this.weeks = helper.getMonth(year, month);
+  this.weeks = helper.getMonth(year, month, weekStartsOn);
   let weeksCount = this.weeks.length - 1;
   let initialDay = new CustomDate(initialDate);
   // we iterate calendar page, this variables shows if iteration has reached `start` and `end` of selected date range
