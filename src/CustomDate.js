@@ -1,55 +1,63 @@
-class CustomDate{
-  constructor(date){
+class CustomDate {
+  constructor(date) {
     this.set(date);
   }
 
-  set(date = {}){
-    if(date instanceof Date){
+  set(date = {}) {
+    if (date instanceof Date) {
       this.setFromDate(date);
-    }else{
+    } else {
       this.setFromProps(date);
     }
   }
 
-  isBefore(date){
+  isBefore(date) {
     const { year, month, day } = date;
 
-    return this.year < year || (year === this.year &&
-      (this.month < month || (month === this.month && this.day < day)))
+    return (
+      this.year < year ||
+      (year === this.year &&
+        (this.month < month || (month === this.month && this.day < day)))
+    );
   }
 
-  isAfter(date){
+  isAfter(date) {
     const { year, month, day } = date;
 
-    return this.year > year || (year === this.year &&
-      (this.month > month || (month === this.month && this.day > day)))
+    return (
+      this.year > year ||
+      (year === this.year &&
+        (this.month > month || (month === this.month && this.day > day)))
+    );
   }
 
-  isEqualTo(date){
+  isEqualTo(date) {
     const { year, month, day } = date;
 
     return year === this.year && month === this.month && day === this.day;
   }
 
-  setFromDate(date){
+  setFromDate(date) {
     this.year = date.getFullYear();
     this.month = date.getMonth();
     this.day = date.getDate();
   }
 
-  setFromProps(date){
-    this.year = typeof date.year === "number" ? date.year : new Date().getFullYear();
-    this.month = typeof date.month === "number" ? date.month : new Date().getMonth();
+  setFromProps(date) {
+    this.year =
+      typeof date.year === "number" ? date.year : new Date().getFullYear();
+    this.month =
+      typeof date.month === "number" ? date.month : new Date().getMonth();
     this.day = typeof date.day === "number" ? date.day : new Date().getDate();
   }
 
-  addDays(value){
+  addDays(value) {
     let newDate = this.getDateObject();
     newDate.setDate(newDate.getDate() + value);
     return new CustomDate(newDate);
   }
 
-  getDateObject(){
+  getDateObject() {
     return new Date(this.year, this.month, this.day);
   }
 }
