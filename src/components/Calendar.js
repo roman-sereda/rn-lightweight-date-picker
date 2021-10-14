@@ -136,8 +136,8 @@ class Calendar extends PureComponent {
             },
           ]}
         >
-          <Text style={styles.subtitle}>{year}</Text>
           <Text style={styles.title}>{monthName}</Text>
+          <Text style={styles.subtitle}>{year}</Text>
         </Animated.View>
       </View>
     );
@@ -164,8 +164,8 @@ class Calendar extends PureComponent {
             { transform: [{ rotateX: fade.interpolate(rotateValues) }] },
           ]}
         >
-          <Text style={styles.subtitle}>{year}</Text>
           <Text style={styles.title}>{monthName}</Text>
+          <Text style={styles.subtitle}>{year}</Text>
         </Animated.View>
         <TouchableOpacity
           testID="rightController"
