@@ -36,6 +36,7 @@ class Calendar extends PureComponent {
       userStyles,
       rowPadding,
       rowHeight,
+      weekStartsOn,
     } = this.props;
     let newState = {};
 
@@ -60,7 +61,7 @@ class Calendar extends PureComponent {
     }
 
     if (prevProps.locale !== locale) {
-      newState.dayNames = helper.getDayNames(locale);
+      newState.dayNames = helper.getDayNames(locale, weekStartsOn);
       newState.monthNames = helper.getMonthNames(locale);
     }
 

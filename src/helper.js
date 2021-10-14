@@ -78,7 +78,18 @@ const addMonth = (_date) => {
   return date;
 };
 
-const getDayNames = (locale) => {
+// Fix toLocaleString on Android
+// Currently we only support En
+// Please use getDayNamesWithLocale below in the future
+const getDayNames = (_locale, weekStartsOn) => {
+  if (weekStartsOn === "sun") {
+    return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  }
+
+  return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+};
+
+const getDayNamesWithLocale = (locale) => {
   // some random Sunday date
   let date = new Date(1567951846289),
     days = [];
@@ -91,7 +102,27 @@ const getDayNames = (locale) => {
   return days;
 };
 
-const getMonthNames = (locale) => {
+// Fix toLocaleString on Android
+// Currently we only support En
+// Please use getDayNamesWithLocale below in the future
+const getMonthNames = (_locale) => {
+  return [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+};
+
+const getMonthNamesWithLocale = (locale) => {
   // some random January date
   let date = new Date(1546874284089),
     months = [];
@@ -103,7 +134,6 @@ const getMonthNames = (locale) => {
 
   return months;
 };
-
 const mergeColors = (_newColors = {}) => {
   let defaultColors = Object.assign({}, colors);
 
